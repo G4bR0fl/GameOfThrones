@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "linkedlist.h"
+#include "linked_list.h"
 
 t_ele* aloca_elemento(int valor){
 	t_ele* ptr = (t_ele *) malloc(sizeof(t_ele));
