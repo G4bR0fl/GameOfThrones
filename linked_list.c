@@ -7,7 +7,8 @@ t_ele* aloca_elemento(int valor){
 	t_ele* ptr = (t_ele *) malloc(sizeof(t_ele));
 
 	ptr->dado = valor;
-	ptr->proximo = NULL; 
+	ptr->proximo = NULL;
+	ptr->anterior = NULL; //git
 
 	return ptr;
 }
@@ -27,7 +28,8 @@ int checar_lista(Lista* list){
 
 void inserir_inicio(Lista* list, int valor){
 	t_ele* elemento = aloca_elemento(valor);
-	elemento->proximo = list->inicio; /*Novo elemento aponta pra NULL*/
+	elemento->proximo = list->inicio; /*Novo elemento aponta pro antigo primeiro elemento*/
+	list->inicio->anterior = elemento; /*O anterior do primeiro elemento que era NULL, agora aponta pro primeiro*/
 	list->inicio = elemento; /*Inicio aponta pro novo elemento*/
 
 	if(list->fim == NULL){
@@ -42,6 +44,7 @@ void inserir_final(Lista* list, int valor){
 	}
 	else{
 		list->fim->proximo = elemento;
+		elemento->anterior = list->fim;
 	}
 	list->fim = elemento;
 }
@@ -96,7 +99,7 @@ void print_list(Lista* list){
 	t_ele* ptr = list->inicio;
 	int i;
 	if(checar_lista(list)){
-		printf("Lista ta vazia meu pcr\n");
+		printf("Lista ta vazia!\n");
 		return;
 	}
 	while(ptr != NULL){
