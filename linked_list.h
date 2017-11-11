@@ -23,5 +23,7 @@ void acessa_final(Lista* list);
 void inserir(int pos, int valor, Lista* list);
 void remove_list(Lista* list);
 void print_list(Lista* list);
+void before_n_after(Lista* list, int pos);
+
 
 #endif
