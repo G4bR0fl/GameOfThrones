@@ -2,6 +2,7 @@
 #define __GOT_H__
 
 
+/*-----------------------AS ESTRUTURAS-----------------------*/
 
 typedef struct { /*Estrutura do personagen*/
 
@@ -17,29 +18,29 @@ typedef struct { /*Estrutura do personagen*/
 
 	int health;
 
-}Personagen;
+} Character;
 
 
-typedef struct ptr { /*nos sao representados por essa estrutura */
+typedef struct node { /*nos sao representados por essa estrutura */
 
-	Personagen* character:
+	Character* character:
 
-	struct ptr* left;
+	struct node* left;
 
-	struct ptr* right;
+	struct node* right;
 	
-}no_arvore;
+}t_node;
 
 
 typedef struct { /*ponteiro pra raiz*/
 
-	no_arvore* raiz;
+	t_node* raiz;
 
 }root;
 
 typedef struct list_ptr{ /*elemento da lista duplamente encadeada */
 
-	personagen* character;
+	Character* character;
 
 	struct list_ptr* anterior;
 
@@ -55,3 +56,7 @@ typedef struct { /*ptr para o inicio e o fim da fila */
 	element* end;
 
 }lista;
+
+/* -----------------------AS FUNÇÕES-----------------------*/ 
+
+t_node* node_create();
