@@ -6,8 +6,8 @@ int main () {
 
 	FILE *personagens;
 
-	char nome[40];
-	char house[40];
+	char nome[10000];
+	char house[10000];
 	char virgula;
 	int agility, strength, intelligence, health;
 
