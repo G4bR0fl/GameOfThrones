@@ -1,0 +1,20 @@
+Jon Snow, Stark, 58, 61, 30, 50
+Arya, Stark, 80, 45, 45, 30
+Ned, Stark, 40, 60, 60, 80
+Robb, Stark, 50, 55, 33, 60
+Sansa, Stark, 20, 20, 46, 25
+The Hound, Clegane, 50, 70, 25, 92
+The Mountain, Clegane, 30, 80, 30, 100
+Daenerys, Targaryen, 20, 30, 66, 32
+Aegon, Targaryen, 50, 65, 55, 57
+Tyrion, Lannister, 40, 50, 80, 61
+Jaime, Lannister, 55, 60, 62, 72
+Cercei, Lannister, 35, 26, 70, 35
+Tommen, Baratheon, 52, 20, 24, 49
+Stanis, Baratheon, 45, 55, 64, 68
+Margaery, Tyrell, 25, 20, 70, 35
+Oberyn, Martell, 75, 60, 31, 61
+Theon, Greyjoy, 35, 40, 42, 57
+Hodor, Stark, 25, 70, 33, 85
+Brienne, Tarth, 62, 68, 40, 50
+Khal Drogo, Dothraki, 53, 72, 30, 75
