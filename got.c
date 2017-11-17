@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "got.h"
-
 
 t_node* node_create(){
 
@@ -28,4 +28,17 @@ t_node* tree_create(){
 	raiz->right = NULL;
 
 	return(raiz); 
+}
+
+Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health){
+
+	Character* character = (Character *) malloc(sizeof(Character));
+	character->name = _name;
+	character->house = _house;
+	character->agility = _agility;
+	character->strength = _strength;
+	character->intelligence = _intelligence;
+	character->health = _health;
+
+	return character;
 }
