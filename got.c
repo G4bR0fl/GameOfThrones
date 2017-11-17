@@ -1,7 +1,10 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "got.h"
+
+int contador_no = 0;
 
 t_node* node_create(){
 
@@ -19,17 +22,25 @@ t_node* node_create(){
 
 t_node* tree_create(){
 
-	t_node* raiz = malloc(sizeof(t_node));/*cria a arvore seta seus ponteiros pra direita e esquerda pra NULL e depois retorna o ponteira pra raiz */
+	t_node* raiz = malloc(sizeof(t_node));/*aloca memoria para o no raiz*/
 
-	raiz->character = NULL;
+	if(raiz == NULL){
 
-	raiz->left = NULL;
+		return(node_create());
 
-	raiz->right = NULL;
+	}
+	if(contador_no < 4){
+
+		raiz->left = tree_create(raiz->left);
+
+		raiz->right = tree_create(raiz->right);
+
+		contador_no++;
+	}
 
 	return(raiz); 
 }
-
+/*
 Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health){
 
 	Character* character = (Character *) malloc(sizeof(Character));
@@ -41,4 +52,6 @@ Character* character_create(char* _name, char* _house, int _agility, int _streng
 	character->health = _health;
 
 	return character;
-}
+}*/
+
+   
