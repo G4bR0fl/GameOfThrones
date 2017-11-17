@@ -42,3 +42,23 @@ Character* character_create(char* _name, char* _house, int _agility, int _streng
 
 	return character;
 }
+	
+void inserir_character(Character* character, lista* l){
+	if(l->begin == NULL && l->end == NULL){
+		l->begin->character->character = character;
+		l->end->character->character = character;
+	}
+	else{
+		element* atual = l->begin;
+		int i;
+	}
+}
+
+lista* aloca_lista(){
+	lista* ptr = (lista *) malloc(sizeof(lista));
+
+	ptr->begin = NULL;
+	ptr->end = NULL;
+
+	return ptr;
+}
