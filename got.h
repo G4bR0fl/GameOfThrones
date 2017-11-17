@@ -23,7 +23,7 @@ typedef struct { /*Estrutura do personagen*/
 
 typedef struct node { /*nos sao representados por essa estrutura */
 
-	Character* character:
+	Character* character;
 
 	struct node* left;
 
@@ -60,3 +60,12 @@ typedef struct { /*ptr para o inicio e o fim da fila */
 /* -----------------------AS FUNÇÕES-----------------------*/ 
 
 t_node* node_create();
+t_node* tree_create();
+Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health);
+
+
+
+
+
+
+#endif
