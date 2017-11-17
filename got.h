@@ -23,7 +23,7 @@ typedef struct { /*Estrutura do personagen*/
 
 typedef struct node { /*nos sao representados por essa estrutura */
 
-	Character* character;
+	Character* character:
 
 	struct node* left;
 
@@ -32,15 +32,9 @@ typedef struct node { /*nos sao representados por essa estrutura */
 }t_node;
 
 
-typedef struct { /*ponteiro pra raiz*/
-
-	t_node* raiz;
-
-}root;
-
 typedef struct list_ptr{ /*elemento da lista duplamente encadeada */
 
-	Character* character;
+	t_node* no;
 
 	struct list_ptr* anterior;
 
@@ -60,12 +54,3 @@ typedef struct { /*ptr para o inicio e o fim da fila */
 /* -----------------------AS FUNÇÕES-----------------------*/ 
 
 t_node* node_create();
-t_node* tree_create();
-Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health);
-
-
-
-
-
-
-#endif
