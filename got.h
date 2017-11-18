@@ -54,9 +54,13 @@ typedef struct { /*ptr para o inicio e o fim da fila */
 /* -----------------------AS FUNÇÕES-----------------------*/ 
 
 t_node* node_create();
+
 t_node* tree_create();
+
 Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health);
+
 void inserir_character(Character* character, lista* l);
+
 lista* aloca_lista();
 
 #endif
