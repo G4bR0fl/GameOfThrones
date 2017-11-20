@@ -3,7 +3,7 @@
 #include "got.h"
 
 int main () {
-
+	int altura = 0;
 	FILE *personagens;
 
 	char nome[10000];
@@ -17,35 +17,27 @@ int main () {
 		exit(-1);
 	}
 
-	lista* l = aloca_lista();
+	while(fscanf(personagens,"%d, %d, %d, %d", &agility, &strength, &intelligence, &health) != EOF){	
 
-while(fscanf(personagens,"%d, %d, %d, %d", &agility, &strength, &intelligence, &health) != EOF){	
+		fscanf(personagens, "%[^',']s", nome);
+		fgetc(personagens);
+		fscanf(personagens, "%[^',']s", house);
+		fgetc(personagens);
+		fscanf(personagens,"%d, %d, %d, %d", &agility, &strength, &intelligence, &health);
 
-	fscanf(personagens, "%[^',']s", nome);
+		Character* character = character_create(nome, house, agility, strength, intelligence, health);
 
-	fgetc(personagens);
+		printf("NOME:%s\nCASA:%s\nAgility:%d\nStrength:%d\nIntelligence:%d\nHealth:%d\n", character->name, character->house, character->agility, character->strength, character->intelligence, character->health);
+		printf("\n\n");
 
-	fscanf(personagens, "%[^',']s", house);
-
-	fgetc(personagens);
-
-	fscanf(personagens,"%d, %d, %d, %d", &agility, &strength, &intelligence, &health);
-
-	Character* character = character_create(nome, house, agility, strength, intelligence, health);
-
-	printf("NOME:%s\nCASA:%s\nAgility:%d\nStrength:%d\nIntelligence:%d\nHealth:%d\n", character->name, character->house, character->agility, character->strength, character->intelligence, character->health);
-
-	printf("\n\n");
-
-	inserir_character(character, l);
-}
+		t_node* root = tree_create();
+		while(altura < 4){	
+			tree_node(root);
+			altura = height(root);
+		}
+	}
 
 	fclose(personagens);
-
-
-
-
-	
 
 	return 0;
 }
