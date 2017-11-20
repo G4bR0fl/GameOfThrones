@@ -19,27 +19,40 @@ t_node* node_create(){
 	return(ptr);
 }
 
-
 t_node* tree_create(){
-
 	t_node* raiz = malloc(sizeof(t_node));/*aloca memoria para o no raiz*/
-
-	if(raiz == NULL){
-
-		return(node_create());
-
-	}
-	if(contador_no < 4){
-
-		raiz->left = tree_create(raiz->left);
-
-		raiz->right = tree_create(raiz->right);
-
-		contador_no++;
-	}
-
-	return(raiz); 
+	raiz = node_create();
+	return raiz;
 }
+
+t_node* tree_node(t_node* raiz){
+	if(raiz == NULL){
+		return node_create();
+	}
+	else{
+		raiz->left = tree_node(raiz->left);
+		raiz->right = tree_node(raiz->right);
+	}
+	return raiz;
+}
+
+int height(t_node* h){/*Checa a altura da arvore*/
+	int hl, hr;
+
+	if(h == NULL){
+		return 0;
+	}
+	hl = height(h->left)+1;
+	hr = height(h->right)+1;
+
+	if(hr >= hl){
+		return hr;
+	}
+	else{
+		return hl;
+	}
+}
+
 Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health){
 
 	Character* character = (Character *) malloc(sizeof(Character));
