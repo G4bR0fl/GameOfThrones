@@ -28,9 +28,10 @@ typedef struct node { /*nos sao representados por essa estrutura */
 	struct node* left;
 
 	struct node* right;
+
+	//int pos;
 	
 }t_node;
-
 
 typedef struct list_ptr{ /*elemento da lista duplamente encadeada */
 					
@@ -62,5 +63,11 @@ Character* character_create(char* _name, char* _house, int _agility, int _streng
 void inserir_character(Character* character, lista* l);
 
 lista* aloca_lista();
+
+int tree_formula();
+
+t_node* tree_node(t_node* raiz);
+
+int height(t_node* h);
 
 #endif
