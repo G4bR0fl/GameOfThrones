@@ -70,4 +70,6 @@ t_node* tree_node(t_node* raiz);
 
 int height(t_node* h);
 
+void display();
+
 #endif
