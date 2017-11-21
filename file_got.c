@@ -31,7 +31,7 @@ int main () {
 		printf("\n\n");
 
 		t_node* root = tree_create();
-		while(altura < 4){	
+		while(altura <= 4){	
 			tree_node(root);
 			altura = height(root);
 		}
