@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "got.h"
+#include <string.h>
 
 int contador_no = 0;
 
@@ -67,14 +68,18 @@ Character* character_create(char* _name, char* _house, int _agility, int _streng
 }
 	
 void inserir_character(Character* character, lista* l){
-	if(l->begin == 0 && l->end == 0){
-
-		l->begin->character->character = character;
-		l->end->character->character = character;
+	if(l->begin == NULL && l->end == NULL){
+		element* personagem = aloca_element(character);
+		l->begin = personagem;
+		l->end = personagem;
 	}
 	else{
-		element* atual = l->begin;
-		int i;
+		element* aux = aloca_element(character);
+		l->end->proximo = aux;
+		aux->anterior = l->end;
+		l->end = aux;
+		l->end->proximo = NULL;
+
 	}
 }
 
@@ -84,12 +89,19 @@ lista* aloca_lista(){
 	ptr->begin = NULL;
 	ptr->end = NULL;
 
-return ptr;
+	return ptr;
 }
 
-void display(){
+element* aloca_element(Character* character){
+	element* personagem_fila = (element *) malloc(sizeof(element));
+	personagem_fila->character = character;
+
+	return personagem_fila;
+}
+
+int display(){
 	char mat[17][45];
-	int i, j;
+	int i, j, gamemode;
 	i = j = 0;
 	FILE *menu;
 	menu = fopen("menu.txt", "r");
@@ -108,5 +120,17 @@ void display(){
 		printf("################");
 		printf("\n\n");
 	fclose(menu);
+
+	printf("[1] Start New Game\n[2] Quit Game\n");
+	scanf("%d", &gamemode);
+	return gamemode;
 }
-   
+  
+
+void print_list(lista* l){
+	element* aux = l->begin;
+	while(aux != NULL){
+		printf("%d -> ", aux->character->strength);
+		aux = aux->proximo;
+	}
+}

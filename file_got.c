@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "got.h"
+#include <string.h>
 
 int main () {
 	int altura = 0;
+
 	FILE *personagens;
 
 	display();
-	exit(-1);
-
 
 	char nome[10000];
 	char house[10000];
@@ -20,9 +20,10 @@ int main () {
 	if(personagens == NULL){
 		exit(-1);
 	}
+	lista* l = aloca_lista();
 
 	while(fscanf(personagens,"%d, %d, %d, %d", &agility, &strength, &intelligence, &health) != EOF){	
-
+		
 		fscanf(personagens, "%[^',']s", nome);
 		fgetc(personagens);
 		fscanf(personagens, "%[^',']s", house);
@@ -34,12 +35,16 @@ int main () {
 		printf("NOME:%s\nCASA:%s\nAgility:%d\nStrength:%d\nIntelligence:%d\nHealth:%d\n", character->name, character->house, character->agility, character->strength, character->intelligence, character->health);
 		printf("\n\n");
 
+		inserir_character(character, l);
+		//print_list(l);
+
 		t_node* root = tree_create();
 		while(altura <= 4){	
 			tree_node(root);
 			altura = height(root);
 		}
 	}
+		print_list(l);
 
 	fclose(personagens);
 

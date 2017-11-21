@@ -35,7 +35,7 @@ typedef struct node { /*nos sao representados por essa estrutura */
 
 typedef struct list_ptr{ /*elemento da lista duplamente encadeada */
 					
-	t_node* character;
+	Character* character;
 
 	struct list_ptr* anterior;
 
@@ -70,6 +70,11 @@ t_node* tree_node(t_node* raiz);
 
 int height(t_node* h);
 
-void display();
+int display();
+
+void print_list(lista* l);
+
+
+element* aloca_element(Character* character);
 
 #endif
