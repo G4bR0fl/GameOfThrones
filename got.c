@@ -93,7 +93,7 @@ void display(){
 	i = j = 0;
 	FILE *menu;
 	menu = fopen("menu.txt", "r");
-	while(fscanf(menu,"%c", &mat[i][j]) != EOF){
+	while(!feof(menu)){
 		for(i = 0; i < 17; i++){
 			for(j = 0; j < 45; j++){
 				fscanf(menu, "%c", &mat[i][j]);
@@ -105,7 +105,8 @@ void display(){
 			printf("%c", mat[i][j]);
 		}
 	}
-		printf("\n");
+		printf("################");
+		printf("\n\n");
 	fclose(menu);
 }
    
