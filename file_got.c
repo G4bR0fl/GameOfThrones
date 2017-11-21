@@ -6,6 +6,10 @@ int main () {
 	int altura = 0;
 	FILE *personagens;
 
+	display();
+	exit(-1);
+
+
 	char nome[10000];
 	char house[10000];
 	char virgula;
