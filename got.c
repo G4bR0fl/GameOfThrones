@@ -86,4 +86,26 @@ lista* aloca_lista(){
 
 return ptr;
 }
+
+void display(){
+	char mat[17][45];
+	int i, j;
+	i = j = 0;
+	FILE *menu;
+	menu = fopen("menu.txt", "r");
+	while(fscanf(menu,"%c", &mat[i][j]) != EOF){
+		for(i = 0; i < 17; i++){
+			for(j = 0; j < 45; j++){
+				fscanf(menu, "%c", &mat[i][j]);
+			}
+		}
+	}
+	for(i = 0; i < 17; i++){
+		for(j = 0; j < 45; j++){
+			printf("%c", mat[i][j]);
+		}
+	}
+		printf("\n");
+	fclose(menu);
+}
    
