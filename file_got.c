@@ -7,9 +7,6 @@ int main () {
 	int altura = 0;
 
 	FILE *personagens;
-
-	display();
-
 	char nome[10000];
 	char house[10000];
 	char virgula;
@@ -36,7 +33,6 @@ int main () {
 		printf("\n\n");
 
 		inserir_character(character, l);
-		//print_list(l);
 
 		t_node* root = tree_create();
 		while(altura <= 4){	
@@ -45,8 +41,8 @@ int main () {
 		}
 	}
 		print_list(l);
-
 	fclose(personagens);
+
 
 	return 0;
 }
