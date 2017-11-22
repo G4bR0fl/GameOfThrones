@@ -57,9 +57,14 @@ int height(t_node* h){/*Checa a altura da arvore*/
 Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health){
 
 	Character* character = (Character *) malloc(sizeof(Character));
-	 
- 	character->name = _name;
-	character->house = _house;
+	char* character_name = (char *) malloc(sizeof(char)*strlen(_name));
+	char* character_house = (char *) malloc(sizeof(char)*strlen(_house));
+
+	strcpy(character_name, _name);
+	strcpy(character_house, _house);
+
+ 	character->name = character_name;
+	character->house = character_house;
 	character->agility = _agility;
 	character->strength = _strength;
 	character->intelligence = _intelligence;
