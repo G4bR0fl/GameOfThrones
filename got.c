@@ -57,7 +57,8 @@ int height(t_node* h){/*Checa a altura da arvore*/
 Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health){
 
 	Character* character = (Character *) malloc(sizeof(Character));
-	character->name = _name;
+	 
+ 	character->name = _name;
 	character->house = _house;
 	character->agility = _agility;
 	character->strength = _strength;
@@ -130,7 +131,7 @@ int display(){
 void print_list(lista* l){
 	element* aux = l->begin;
 	while(aux != NULL){
-		printf("%d -> ", aux->character->strength);
+		printf("%s -> ", aux->character->name);
 		aux = aux->proximo;
 	}
 }
