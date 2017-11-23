@@ -78,4 +78,9 @@ void character_free(Character* character);
 
 element* aloca_element(Character* character);
 
+void remove_list(lista* l);
+
+void tree_free(t_node* tree);
+
+
 #endif
