@@ -74,6 +74,7 @@ int display();
 
 void print_list(lista* l);
 
+void character_free(Character* character);
 
 element* aloca_element(Character* character);
 
