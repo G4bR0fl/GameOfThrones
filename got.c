@@ -68,6 +68,9 @@ Character* character_create(char* _name, char* _house, int _agility, int _streng
 	character->intelligence = _intelligence;
 	character->health = _health;
 
+	//free(character_name);
+	//free(character_house);
+
 	return character;
 }
 	
@@ -83,7 +86,6 @@ void inserir_character(Character* character, lista* l){
 		aux->anterior = l->end;
 		l->end = aux;
 		l->end->proximo = NULL;
-
 	}
 }
 
@@ -137,6 +139,7 @@ void print_list(lista* l){
 		printf("%s -> ", aux->character->name);
 		aux = aux->proximo;
 	}
+	printf("\n");
 }
 
 void character_free(Character* character){
@@ -147,3 +150,34 @@ void character_free(Character* character){
 	character->house = NULL;
 	character = NULL;
 }	
+
+void remove_list(lista* l){
+	element* ptr = l->begin;
+	if(l->begin == NULL && l->end == NULL){
+		printf("Lista vazia!\nSaindo\n");
+		exit(-1);
+	}
+	while(ptr != NULL){
+		l->begin = l->begin->proximo;
+		free(ptr);
+		ptr = l->begin;
+	}
+	l->end = ptr;
+	free(l);
+}
+
+void tree_free(t_node* tree){
+	if(tree == NULL){
+		printf("Arvore vazia!\n");
+	}
+	else{
+		if(tree->left != NULL && tree->right != NULL){
+			tree_free(tree->left);
+			tree_free(tree->right);
+		}
+		if(tree->left == NULL && tree->right == NULL){
+			free(tree);
+			return;
+		}
+	}
+}
