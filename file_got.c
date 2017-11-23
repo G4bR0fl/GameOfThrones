@@ -28,7 +28,7 @@ int main () {
 		fscanf(personagens,"%d, %d, %d, %d", &agility, &strength, &intelligence, &health);
 
 		Character* character = character_create(nome, house, agility, strength, intelligence, health);
-
+		
 		printf("NOME:%s\nCASA:%s\nAgility:%d\nStrength:%d\nIntelligence:%d\nHealth:%d\n", character->name, character->house, character->agility, character->strength, character->intelligence, character->health);
 		printf("\n\n");
 
@@ -39,8 +39,11 @@ int main () {
 			tree_node(root);
 			altura = height(root);
 		}
+		tree_free(root);
 	}
 		print_list(l);
+		remove_list(l);
+
 	fclose(personagens);
 
 
