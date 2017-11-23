@@ -5,8 +5,6 @@
 #include "got.h"
 #include <string.h>
 
-int contador_no = 0;
-
 t_node* node_create(){
 
 	t_node* ptr = malloc(sizeof(t_node));/*aloca dinamicamente um no depois coloca NULL nos ponteiros de Character right e left */
@@ -140,3 +138,12 @@ void print_list(lista* l){
 		aux = aux->proximo;
 	}
 }
+
+void character_free(Character* character){
+	free(character->name);
+	free(character->house);
+	free(character);
+	character->name = NULL;
+	character->house = NULL;
+	character = NULL;
+}	
