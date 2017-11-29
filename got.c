@@ -128,8 +128,143 @@ int display(){
 	fclose(menu);
 
 	printf("[1] Start New Game\n[2] Quit Game\n");
-	scanf("%d", &gamemode);
+
+		scanf("%d", &gamemode);
+
+		while(gamemode != 1 && gamemode != 2){//loop pra condiçao de valor correto
+
+				Mensagem_de_ERRO();
+				scanf("%d", &gamemode);
+
+		}
+
+
 	return gamemode;
+}
+
+void Mensagem_de_ERRO(){
+
+	printf("Digite [1] para  dar start ao jogo ou [2] para sair do jogo\n");
+
+} 
+
+void Game_mode(int gamemode){
+
+		if(gamemode == 1){//chama a função
+
+			Menu_Gameofthrones();
+		}
+
+		else {
+
+			exit -1;
+
+		}
+}
+
+void Pre_Menu(){
+
+	int valor_de_entrada;
+
+	valor_de_entrada = display();
+
+	Game_mode(valor_de_entrada);
+
+}
+
+void Menu_Gameofthrones(){
+
+
+	lista* personas = lista_aleatoria();
+
+	print_list(personas);
+
+	
+}
+
+
+lista* lista_aleatoria(){
+
+	FILE* personagens;/*ptr para arquivo */
+
+	char nome[10000];
+	char house[10000];
+	int agility, strength, intelligence, health;
+
+	personagens = fopen("personagens.txt", "r");
+
+	lista* l = aloca_lista();
+	
+	if(personagens == NULL){
+
+		printf("Arquivo dos personagens do jogo inexistente T-T\n");/*testa se o arquivo abre */
+
+		exit(-1);
+	}
+
+	/*essa parte do codigo cria um vetor de 16 com aleatorios que vai 1 ate 20 */
+
+	int  i, j = 0, random, existe_numero;
+
+	struct timespec seed;
+
+	int vet[16];
+
+	while(j < 16){
+
+		clock_gettime(CLOCK_REALTIME, &seed);
+
+		srand(seed.tv_nsec);
+
+		random = rand()%20;
+
+		for(i = 0; i < 16;i++){
+
+			if(random == vet[i]){
+
+				existe_numero = 1;
+			}
+		}
+
+		if(existe_numero != 1){
+
+			vet[j] = random;
+
+			j++;
+		}
+
+		existe_numero = 0;
+	}
+
+	int k = 0;
+
+	/*parte do codigo que pega personagens aleatorios de acordo com os valores no vet[]*/
+
+	while(k < 16){
+
+		for(i = 0; i < vet[k];i++){
+
+			fscanf(personagens,"%[^',']s",nome);
+			fgetc(personagens);
+			fscanf(personagens, "%[^',']s", house);
+			fgetc(personagens);
+			fscanf(personagens, "%d, %d, %d, %d",&agility,&strength,&intelligence,&health);
+
+		}
+
+		Character* character = character_create(nome, house, agility, strength, intelligence, health);
+
+		inserir_character(character, l);
+
+		rewind(personagens);
+
+		k++;
+
+	}
+
+
+	return l;
+
 }
   
 
