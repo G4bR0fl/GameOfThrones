@@ -64,6 +64,8 @@ void inserir_character(Character* character, lista* l);
 
 lista* aloca_lista();
 
+lista* lista_aleatoria();
+
 int tree_formula();
 
 t_node* tree_node(t_node* raiz);
@@ -81,6 +83,16 @@ element* aloca_element(Character* character);
 void remove_list(lista* l);
 
 void tree_free(t_node* tree);
+
+void Mensagem_de_ERRO();
+
+void Game_mode(int gamemode);
+
+void Pre_Menu();
+
+void Menu_Gameofthrones();
+
+
 
 
 #endif
