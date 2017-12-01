@@ -127,7 +127,6 @@ int display(){
 		printf("\n\n");
 	fclose(menu);
 
-
 		scanf("%d", &gamemode);
 
 		while(gamemode != 1 && gamemode != 2){//loop pra condiçao de valor correto
@@ -177,9 +176,7 @@ void display_de_escolha(){
 }
 
 void Mensagem_de_ERRO(){
-
 	printf("Digite [1] para  dar start ao jogo ou [2] para sair do jogo\n");
-
 } 
 
 void Game_mode(int gamemode){
@@ -217,11 +214,6 @@ void Menu_Gameofthrones(){
 
 	mostra_personagem_escolhido(personas, escolha);
 
-
-
-
-
-	
 }
 
 element* mostra_personagem_escolhido(lista* lista, int escolha){
@@ -233,9 +225,7 @@ element* mostra_personagem_escolhido(lista* lista, int escolha){
 
 	aux_ptr = lista->begin;
 
-
 	while(contador < escolha){
-
 		aux_ptr = aux_ptr->proximo;
 		contador++;
 	}
@@ -355,7 +345,6 @@ int escolhe_personagem(lista* lista){
 
 }
 
-
 lista* lista_aleatoria(){
 
 	FILE* personagens;/*ptr para arquivo */
@@ -440,7 +429,6 @@ lista* lista_aleatoria(){
 
 }
   
-
 void print_list(lista* l){
 	element* aux = l->begin;
 	while(aux != NULL){
@@ -467,25 +455,50 @@ void remove_list(lista* l){
 	}
 	while(ptr != NULL){
 		l->begin = l->begin->proximo;
+		character_free(ptr->character);
 		free(ptr);
 		ptr = l->begin;
 	}
 	l->end = ptr;
 	free(l);
-}
+}/*Verificar leak*/
 
-void tree_free(t_node* tree){
-	if(tree == NULL){
+void tree_free(t_node* raiz){
+	if(raiz == NULL){
 		printf("Arvore vazia!\n");
 	}
 	else{
-		if(tree->left != NULL && tree->right != NULL){
-			tree_free(tree->left);
-			tree_free(tree->right);
+		if(raiz->left != NULL && raiz->right != NULL){
+			tree_free(raiz->left);
+			tree_free(raiz->right);
 		}
-		if(tree->left == NULL && tree->right == NULL){
-			free(tree);
+		if(raiz->left == NULL && raiz->right == NULL){
+			free(raiz);
 			return;
+		}
+	}/*Verificar leak*/
+}
+
+void preenche_arvore(t_node* raiz, lista* l, int counter){
+	int i;
+	if(raiz->left != NULL && raiz->right != NULL){
+		preenche_arvore(raiz->left, l, counter*2);
+		preenche_arvore(raiz->right, l, (counter*2) +1);
+	}
+	else{
+		counter -= 16;
+		element* ptr = l->begin;
+		if(counter == 0){
+			raiz->character = l->begin->character;
+		}
+		else{
+			i = counter;
+			while(i > 0){
+				ptr = ptr->proximo;
+				i--;
+			}
+			raiz->character = ptr->character;
 		}
 	}
 }
+
