@@ -4,6 +4,7 @@
 #include <time.h>
 #include "got.h"
 #include <string.h>
+#include <unistd.h>
 
 t_node* node_create(){
 
@@ -106,28 +107,26 @@ element* aloca_element(Character* character){
 }
 
 int display(){
-	char mat[17][45];
+	char mat[31][99];
 	int i, j, gamemode;
 	i = j = 0;
 	FILE *menu;
 	menu = fopen("menu.txt", "r");
 	while(!feof(menu)){
-		for(i = 0; i < 17; i++){
-			for(j = 0; j < 45; j++){
+		for(i = 0; i < 31; i++){
+			for(j = 0; j < 99; j++){
 				fscanf(menu, "%c", &mat[i][j]);
 			}
 		}
 	}
-	for(i = 0; i < 17; i++){
-		for(j = 0; j < 45; j++){
+	for(i = 0; i < 31; i++){
+		for(j = 0; j < 99; j++){
 			printf("%c", mat[i][j]);
 		}
 	}
-		printf("################");
 		printf("\n\n");
 	fclose(menu);
 
-	printf("[1] Start New Game\n[2] Quit Game\n");
 
 		scanf("%d", &gamemode);
 
@@ -140,6 +139,41 @@ int display(){
 
 
 	return gamemode;
+}
+
+void display_de_escolha(){
+
+	char mat[8][109];
+
+	int i = 0, j = 0;
+
+	FILE *escolha;
+
+	escolha = fopen("escolha.txt", "r");
+
+	printf("\n\n");
+
+	while(!feof(escolha)){
+
+		for(i = 0;i < 8;i++){
+			for(j = 0;j < 109;j++){
+
+				fscanf(escolha, "%c", &mat[i][j]);
+			}
+		}
+	}
+
+	for(i = 0;i < 8;i++){
+		for(j = 0; j < 109;j++){
+
+			printf("%c", mat[i][j]);
+
+		}
+	}
+
+	printf("\n\n");
+
+	fclose(escolha);
 }
 
 void Mensagem_de_ERRO(){
@@ -173,13 +207,152 @@ void Pre_Menu(){
 }
 
 void Menu_Gameofthrones(){
-
+	int escolha;
 
 	lista* personas = lista_aleatoria();
 
 	print_list(personas);
 
+	escolha = escolhe_personagem(personas);
+
+	mostra_personagem_escolhido(personas, escolha);
+
+
+
+
+
 	
+}
+
+element* mostra_personagem_escolhido(lista* lista, int escolha){
+
+	element* aux_ptr;
+	element* ptr_player;
+
+	int contador = 1;
+
+	aux_ptr = lista->begin;
+
+
+	while(contador < escolha){
+
+		aux_ptr = aux_ptr->proximo;
+		contador++;
+	}
+
+	printf("Seu personagem: %s ", aux_ptr->character->name);
+	printf("da casa %s\n", aux_ptr->character->house);
+	printf("1)Agility      : %d\n", aux_ptr->character->agility);
+	printf("2)Strength     : %d\n", aux_ptr->character->strength);
+	printf("3)Intelligence : %d\n", aux_ptr->character->intelligence);
+	printf("4)Health       : %d\n", aux_ptr->character->health);
+
+
+	ptr_player = aux_ptr;
+
+	return ptr_player;
+}
+
+int escolhe_personagem(lista* lista){
+
+	display_de_escolha();
+
+	sleep(2);
+
+	printf("\n");
+
+	int random;
+
+	struct timespec seed;
+
+	clock_gettime(CLOCK_REALTIME, &seed);
+
+	srand(seed.tv_nsec);
+
+	int contador = 1;
+
+	element* aux_ptr = lista->begin;
+
+	while(aux_ptr != NULL){
+
+		random = rand()%4+1;
+
+		printf("Personagem %d :\n", contador);
+
+		switch(random){
+
+			case 1 :
+
+				printf("Agility: %d ", aux_ptr->character->agility);
+
+				break;
+
+			default :
+
+				printf("Agility: ?? ");
+
+				break;
+
+		}
+
+		switch(random){
+
+			case 2:
+
+				printf("Strength: %d ", aux_ptr->character->strength);
+
+				break;
+
+			default :
+
+				printf("Strength: ?? ");
+
+				break;
+		}
+
+		switch(random){
+
+			case 3:
+
+				printf("Intelligence: %d ", aux_ptr->character->intelligence);
+
+				break;
+
+			default :
+
+				printf("intelligence: ?? ");
+
+				break;
+		}
+
+		switch(random){
+
+			case 4:
+
+				printf("Health: %d ", aux_ptr->character->health);
+
+				break;
+
+			default :
+
+				printf("Health: ?? ");
+
+				break;
+		}
+
+		printf("\n\n");
+
+		aux_ptr = aux_ptr->proximo;
+
+		contador++;
+	}
+
+	int nro_que_escolheu; 
+
+	scanf("%d", &nro_que_escolheu);
+
+	return nro_que_escolheu;
+
 }
 
 
