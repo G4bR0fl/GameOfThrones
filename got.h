@@ -74,6 +74,8 @@ int height(t_node* h);
 
 int display();
 
+void display_de_escolha();
+
 void print_list(lista* l);
 
 void character_free(Character* character);
@@ -91,6 +93,10 @@ void Game_mode(int gamemode);
 void Pre_Menu();
 
 void Menu_Gameofthrones();
+
+int escolhe_personagem(lista* lista);
+
+element* mostra_personagem_escolhido(lista* lista, int escolha);
 
 
 
