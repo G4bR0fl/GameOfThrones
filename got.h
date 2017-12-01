@@ -84,7 +84,7 @@ element* aloca_element(Character* character);
 
 void remove_list(lista* l);
 
-void tree_free(t_node* tree);
+void tree_free(t_node* raiz);
 
 void Mensagem_de_ERRO();
 
@@ -98,7 +98,7 @@ int escolhe_personagem(lista* lista);
 
 element* mostra_personagem_escolhido(lista* lista, int escolha);
 
-
+void preenche_arvore(t_node* raiz, lista* l, int counter);
 
 
 #endif
