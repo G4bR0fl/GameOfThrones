@@ -107,6 +107,9 @@ element* aloca_element(Character* character){
 }
 
 int display(){
+
+	system("clear");
+
 	char mat[31][99];
 	int i, j, gamemode;
 	i = j = 0;
@@ -141,6 +144,8 @@ int display(){
 }
 
 void display_de_escolha(){
+
+	system("clear");
 
 	char mat[8][109];
 
@@ -204,22 +209,467 @@ void Pre_Menu(){
 }
 
 void Menu_Gameofthrones(){
+
 	int escolha;
+
+	int contador = 1;
+
+	int atributo_escolhido;
+
+	t_node* raiz = tree_create();
 
 	lista* personas = lista_aleatoria();
 
-	print_list(personas);
-
 	escolha = escolhe_personagem(personas);
 
-	mostra_personagem_escolhido(personas, escolha);
+	Character* player = mostra_personagem_escolhido(personas, escolha);
+
+	cria_torneio(raiz,personas,contador);
+
+	printf("\n\n\n");
+
+	printf("Round 1:\n\n");
+
+	atributo_escolhido = procura_adversario(raiz,player,0);
+
+	printf("Atributo escolhido :%d\n", atributo_escolhido);
+
+	printf("\n\n\n");
+
+	printf("Round 2:\n\n");
+
+	atributo_escolhido = procura_adversario(raiz,player,atributo_escolhido);
+
+	printf("Atributo escolhido :%d\n", atributo_escolhido);
+
+	printf("\n\n\n");
+
+	printf("Round 3:\n\n");
+
+	atributo_escolhido = procura_adversario(raiz,player,atributo_escolhido);
+
+	printf("Atributo escolhido :%d\n", atributo_escolhido);
+
+	printf("\n\n\n");
+
+	printf("Round 4:\n\n");
+
+	atributo_escolhido = procura_adversario(raiz,player,atributo_escolhido);
+
+	printf("Atributo escolhido :%d\n", atributo_escolhido);
+
 
 }
 
-element* mostra_personagem_escolhido(lista* lista, int escolha){
+void seu_personagem(Character* player, int atributo_escolhido){
+
+	printf("Seu personagem : %s da casa %s\n",player->name,player->house);
+
+	switch(atributo_escolhido){
+
+		case 1:
+
+			printf("X)X            : XX\n");
+
+			break;
+
+		default:
+
+			printf("1)Agility      : %d\n",player->agility);
+
+			break;
+	}
+
+	switch(atributo_escolhido){
+
+		case 2:
+
+			printf("X)X            : XX\n");
+
+			break;
+
+		default:
+
+			printf("2)Strength     : %d\n",player->strength);
+
+			break;
+	}
+
+
+	switch(atributo_escolhido){
+
+		case 3:
+
+			printf("X)X            : XX\n");
+
+			break;
+
+		default:
+
+			printf("3)Intelligence : %d\n",player->intelligence);
+
+			break;
+	}
+
+	switch(atributo_escolhido){
+		case 4:
+
+			printf("X)X            : XX\n");
+
+			break;
+
+		default:
+
+			printf("4)Health       : %d\n", player->health);
+
+			break;
+	}
+
+}
+
+
+int procura_adversario(t_node* raiz, Character* player, int atributo){
+
+
+		Character* Vencedor;
+
+			if(raiz != NULL && raiz->character == NULL){
+
+				if(raiz->left->character != NULL && raiz->right->character != NULL){
+
+				 	if(raiz->left->character == player){
+
+				 		printf("\n\n");
+
+				 		seu_personagem(player,atributo);
+
+
+				 		printf("Seu adversario : %s da casa %s\n", raiz->right->character->name, raiz->right->character->house);
+
+				 		printf("\n\nSelecione um atributo: ");
+
+				 		scanf("%d", &atributo);
+				 		
+				 		 Vencedor = fight(player, raiz->right->character, atributo);
+
+				 		 	if(Vencedor != player){
+
+				 		 		printf("\t\t\tVoce perdeu T-T\t\t\t\n");
+
+				 		 		printa_combate(player, raiz->right->character, atributo);
+
+				 		 		deseja_continuar();
+
+				 		 	}
+				 		 	else{
+
+				 		 		printf("\t\t\tVoce Ganhou :P\t\t\t\n");
+
+				 		 		printa_combate(player,raiz->right->character, atributo);
+				 		 	}
+
+				 	}
+				 	else if(raiz->right->character == player){
+
+				 		printf("\n\n");
+
+				 		seu_personagem(player,atributo);
+
+				 		printf("Seu adversario : %s da casa %s\n", raiz->left->character->name, raiz->left->character->house);
+
+				 		printf("\n\nSelecione um atributo: ");
+
+				 		scanf("%d", &atributo);
+
+				 		 Vencedor = fight(raiz->left->character, player, atributo);
+
+				 		 if(Vencedor != player){
+
+				 		 		printf("\t\t\tVoce perdeu T-T\t\t\t\n");
+
+				 		 		printa_combate(player, raiz->left->character, atributo);
+
+				 		 		deseja_continuar();
+
+				 		 	}
+				 		 	else{
+
+				 		 		printf("\t\t\tVoce Ganhou :P\t\t\t\n");
+
+				 		 		printa_combate(player,raiz->left->character, atributo);
+				 		 	}
+				 	}
+				 	else {
+
+				 		Vencedor = fight_bot(raiz->left->character,raiz->right->character);
+				 	}
+
+				 	raiz->character = Vencedor;
+
+				}
+
+				procura_adversario(raiz->left,player,atributo);
+				procura_adversario(raiz->right,player,atributo);
+			}
+
+		if(atributo != 0){
+
+			return atributo;
+
+		}
+
+}
+
+void deseja_continuar(){
+
+	int escolha;
+
+	printf("Voce se fudeu pela a Guerra ao Trono de Ferro e acabou morrendo deseja continuar\n");
+	printf("\n\n");
+	printf("[1] - Sim,quero tentar denovo\n");
+	printf("[2] - Foda-se essa porra quero e ir embora\n");
+
+	scanf("%d", &escolha);
+
+	while(escolha != 1 && escolha != 2){
+		printf("Nao basta perder ainda digita errado meu deus!!!!\n");
+		scanf("%d", &escolha);
+	}
+
+	Game_mode(escolha);
+}
+
+void printa_combate(Character* fighter_one,Character* fighter_two, int combate){
+
+	switch(combate){
+
+		case 1:
+
+			printf("%s (%d Agility) vs %s (%d Agility)\n",fighter_one->name, fighter_one->agility, fighter_two->name,fighter_two->agility);
+
+			break;
+
+		case 2:
+
+			printf("%s (%d Strength) vs %s (%d Strength)\n", fighter_one->name, fighter_one->strength, fighter_two->name,fighter_two->strength);
+		
+			break;
+
+		case 3:
+
+			printf("%s (%d Intelligence) vs %s (%d Intelligence)\n", fighter_one->name,fighter_one->intelligence,fighter_two->name,fighter_two->intelligence);
+			
+			break;
+
+		case 4:
+
+			printf("%s (%d Health) vs %s (%d Health)\n", fighter_one->name, fighter_one->health,fighter_two->name,fighter_two->health);
+	}
+
+}
+
+
+
+Character* fight(Character* fighter_one, Character* fighter_two, int atributo){
+
+	Character* winner;
+
+	switch(atributo){
+
+		case 1:
+
+			if(fighter_one->agility >= fighter_two->agility){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+			}
+
+			break;
+
+		case 2:
+
+			if(fighter_one->strength >= fighter_two->strength){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+
+			}
+
+			break;
+
+		case 3:
+
+			if(fighter_one->intelligence >= fighter_two->intelligence){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+			}
+
+			break;
+
+		case 4:
+
+			if(fighter_one->health >= fighter_two->health){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+			}
+
+			break;
+
+	}
+
+
+}
+
+Character* fight_bot(Character* fighter_one, Character* fighter_two){
+
+	int random;
+
+	Character* winner;
+
+	struct timespec seed;
+
+	clock_gettime(CLOCK_REALTIME, &seed);
+
+	srand(seed.tv_nsec);
+
+	random = rand()%4+1;
+
+	printa_combate(fighter_one,fighter_two,random);
+
+	switch(random){
+
+		case 1:
+
+			if(fighter_one->agility >= fighter_two->agility){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+			}
+
+			break;
+
+		case 2:
+
+			if(fighter_one->strength >= fighter_two->strength){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+
+			}
+
+			break;
+
+		case 3:
+
+			if(fighter_one->intelligence >= fighter_two->intelligence){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+			}
+
+			break;
+
+		case 4:
+
+			if(fighter_one->health >= fighter_two->health){
+
+				winner = fighter_one;
+
+				return winner;
+			}
+			else {
+
+				winner = fighter_two;
+
+				return winner;
+			}
+
+			break;
+
+	}
+
+
+}
+
+
+
+void cria_torneio(t_node* raiz, lista* lista, int contador){
+
+	int altura = 0;
+
+		while(altura <= 4){
+
+			tree_node(raiz);
+
+			altura = height(raiz);
+
+		}
+
+		preenche_arvore(raiz,lista,contador);
+
+}
+
+Character* mostra_personagem_escolhido(lista* lista, int escolha){
 
 	element* aux_ptr;
-	element* ptr_player;
+	Character* player;
 
 	int contador = 1;
 
@@ -238,9 +688,9 @@ element* mostra_personagem_escolhido(lista* lista, int escolha){
 	printf("4)Health       : %d\n", aux_ptr->character->health);
 
 
-	ptr_player = aux_ptr;
+	player = aux_ptr->character;
 
-	return ptr_player;
+	return player;
 }
 
 int escolhe_personagem(lista* lista){
@@ -504,7 +954,7 @@ void preenche_arvore(t_node* raiz, lista* l, int counter){
 
 void tree_print_preorder(t_node* raiz){
     if(raiz != NULL){
-        if(raiz->left == NULL || raiz->right == NULL){
+        if(raiz->character != NULL){
         	printf("%s\n", raiz->character->name);
         }
         tree_print_preorder(raiz->left);
