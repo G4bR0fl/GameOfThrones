@@ -100,5 +100,7 @@ element* mostra_personagem_escolhido(lista* lista, int escolha);
 
 void preenche_arvore(t_node* raiz, lista* l, int counter);
 
+void tree_print_preorder(t_node* raiz);
+
 
 #endif
