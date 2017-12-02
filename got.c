@@ -230,33 +230,51 @@ void Menu_Gameofthrones(){
 
 	printf("Round 1:\n\n");
 
-	atributo_escolhido = procura_adversario(raiz,player,0);
-
-	printf("Atributo escolhido :%d\n", atributo_escolhido);
+	procura_adversario(raiz,player,0);
 
 	printf("\n\n\n");
 
 	printf("Round 2:\n\n");
 
-	atributo_escolhido = procura_adversario(raiz,player,atributo_escolhido);
-
-	printf("Atributo escolhido :%d\n", atributo_escolhido);
+	procura_adversario(raiz,player,atributo_escolhido);
 
 	printf("\n\n\n");
 
 	printf("Round 3:\n\n");
 
-	atributo_escolhido = procura_adversario(raiz,player,atributo_escolhido);
-
-	printf("Atributo escolhido :%d\n", atributo_escolhido);
+	procura_adversario(raiz,player,atributo_escolhido);
 
 	printf("\n\n\n");
 
 	printf("Round 4:\n\n");
 
-	atributo_escolhido = procura_adversario(raiz,player,atributo_escolhido);
+	procura_adversario(raiz,player,atributo_escolhido);
 
-	printf("Atributo escolhido :%d\n", atributo_escolhido);
+	deseja_continuar_vencedor();
+
+
+}
+
+void deseja_continuar_vencedor(){
+
+		int escolha;
+
+	printf("Voce e o bichao mesmo hein, conquistou o Trono de Ferro e toda a Westeros\n");
+
+	printf("Parabens!!!!\n\n");
+	printf("Quer jogar novamente?");
+	printf("\n\n");
+	printf("[1] - Sim,quero jogar novamente\n");
+	printf("[2] - Foda-se essa porra quero e ir embora\n");
+
+	scanf("%d", &escolha);
+
+	while(escolha != 1 && escolha != 2){
+		printf("Ganhar nao significa que voce pode digitar errado,amor\n");
+		scanf("%d", &escolha);
+	}
+
+	Game_mode(escolha);
 
 
 }
@@ -349,7 +367,7 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){
 				 		printf("\n\nSelecione um atributo: ");
 
 				 		scanf("%d", &atributo);
-				 		
+
 				 		 Vencedor = fight(player, raiz->right->character, atributo);
 
 				 		 	if(Vencedor != player){
@@ -424,7 +442,7 @@ void deseja_continuar(){
 
 	int escolha;
 
-	printf("Voce se fudeu pela a Guerra ao Trono de Ferro e acabou morrendo deseja continuar\n");
+	printf("Voce se fudeu pela a Guerra ao Trono de Ferro e acabou morrendo deseja continuar?\n");
 	printf("\n\n");
 	printf("[1] - Sim,quero tentar denovo\n");
 	printf("[2] - Foda-se essa porra quero e ir embora\n");
