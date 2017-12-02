@@ -116,6 +116,8 @@ void seu_personagem(Character* player, int atributo);
 
 void deseja_continuar();
 
+void deseja_continuar_vencedor();
+
 
 
 #endif
