@@ -502,3 +502,12 @@ void preenche_arvore(t_node* raiz, lista* l, int counter){
 	}
 }
 
+void tree_print_preorder(t_node* raiz){
+    if(raiz != NULL){
+        if(raiz->left == NULL || raiz->right == NULL){
+        	printf("%s\n", raiz->character->name);
+        }
+        tree_print_preorder(raiz->left);
+        tree_print_preorder(raiz->right);
+    }
+}
