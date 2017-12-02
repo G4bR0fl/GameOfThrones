@@ -96,11 +96,26 @@ void Menu_Gameofthrones();
 
 int escolhe_personagem(lista* lista);
 
-element* mostra_personagem_escolhido(lista* lista, int escolha);
+Character* mostra_personagem_escolhido(lista* lista, int escolha);
+
+Character* fight_bot(Character* fighter_one, Character* fighter_two);
+
+Character* fight(Character* fighter_one, Character* fighter_two, int atribute);
 
 void preenche_arvore(t_node* raiz, lista* l, int counter);
 
 void tree_print_preorder(t_node* raiz);
+
+void cria_torneio(t_node* raiz, lista* lista, int contador);
+
+int procura_adversario(t_node* raiz, Character* player, int atributo);
+
+void printa_combate(Character* fighter_one, Character* fighter_two, int atributo);
+
+void seu_personagem(Character* player, int atributo);
+
+void deseja_continuar();
+
 
 
 #endif
