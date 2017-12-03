@@ -108,7 +108,7 @@ void tree_print_preorder(t_node* raiz);
 
 void cria_torneio(t_node* raiz, lista* lista, int contador);
 
-int procura_adversario(t_node* raiz, Character* player, int atributo);
+void procura_adversario(t_node* raiz, Character* player, int atributo);
 
 void printa_combate(Character* fighter_one, Character* fighter_two, int atributo);
 
@@ -117,6 +117,13 @@ void seu_personagem(Character* player, int atributo);
 void deseja_continuar();
 
 void deseja_continuar_vencedor();
+
+void display_vitorioso();
+
+void display_shame();
+
+void digite_continua();
+
 
 
 
