@@ -256,8 +256,9 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	procura_adversario(raiz,player,atributo_escolhido);
 
-	deseja_continuar_vencedor();
-
+	if(raiz->character == player){
+		deseja_continuar_vencedor();	
+	}
 
 }
 
@@ -281,7 +282,6 @@ void deseja_continuar_vencedor(){/*Aqui nos damos a opcao do jogador continuar m
 	}
 
 	Game_mode(escolha);
-
 
 }
 
@@ -491,8 +491,6 @@ void printa_combate(Character* fighter_one,Character* fighter_two, int combate){
 
 }
 
-
-
 Character* fight(Character* fighter_one, Character* fighter_two, int atributo){/*Aqui temos a funcao de chamar a luta, que recebe o jogador 1 e o jogador 2*/
 
 	Character* winner;/*Ponteiro pra Character, que recebe o vencedor, podendo ser fighter_one ou fighter_two*/
@@ -572,7 +570,6 @@ Character* fight(Character* fighter_one, Character* fighter_two, int atributo){/
 			break;
 
 	}
-
 
 }
 
@@ -668,10 +665,7 @@ Character* fight_bot(Character* fighter_one, Character* fighter_two){/*Aqui temo
 
 	}
 
-
 }
-
-
 
 void cria_torneio(t_node* raiz, lista* lista, int contador){/*Aqui a arvore eh criada*/
 
@@ -986,3 +980,4 @@ void tree_print_preorder(t_node* raiz){/*Essa funcao printa os personagens em pr
         tree_print_preorder(raiz->right);
     }
 }
+
