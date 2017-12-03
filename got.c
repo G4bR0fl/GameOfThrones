@@ -116,20 +116,20 @@ int display(){/*Nessa funcao apenas lemos o arquivo texto 'menu.txt' que possui 
 
 	system("clear");
 
-	char mat[31][99];
+	char mat[30][100];
 	int i, j, gamemode;
 	i = j = 0;
 	FILE *menu;
 	menu = fopen("menu.txt", "r");
 	while(!feof(menu)){
-		for(i = 0; i < 31; i++){
-			for(j = 0; j < 99; j++){
+		for(i = 0; i < 30; i++){
+			for(j = 0; j < 100; j++){
 				fscanf(menu, "%c", &mat[i][j]);
 			}
 		}
 	}
-	for(i = 0; i < 31; i++){
-		for(j = 0; j < 99; j++){
+	for(i = 0; i < 30; i++){
+		for(j = 0; j < 100; j++){
 			printf("%c", mat[i][j]);
 		}
 	}
@@ -186,9 +186,82 @@ void display_de_escolha(){/*Aqui nos printamos de um jeito mais bonito a escolha
 	fclose(escolha);
 }
 
+void display_vitorioso(){
+
+	char mat[9][41];
+
+	int i = 0, j = 0;
+
+	FILE *vitoria;
+
+	vitoria = fopen("Vitoria.txt", "r");
+
+	printf("\n\n");
+
+	while(!feof(vitoria)){
+		for(i = 0;i < 9;i++){
+			for(j = 0;j < 41;j++){
+				fscanf(vitoria, "%c", &mat[i][j]);
+			}
+		}
+	}
+	
+
+	for(i = 0;i < 9;i++){
+		for(j = 0; j < 41;j++){
+				printf("%c",mat[i][j]);
+		}
+	}
+
+		printf("\n\n");
+
+		fclose(vitoria);
+}
+
+void display_shame(){
+
+	char mat[8][39];
+
+	int i = 0, j = 0;
+
+	FILE *derrota;
+
+	derrota = fopen("derrota.txt", "r");
+
+	printf("\n\n");
+
+	while(!feof(derrota)){
+		for(i = 0;i < 8;i++){
+			for(j = 0;j < 39;j++){
+				fscanf(derrota, "%c", &mat[i][j]);
+			}
+		}
+	}
+	
+
+	for(i = 0;i < 8;i++){
+		for(j = 0; j < 39;j++){
+				printf("%c",mat[i][j]);
+		}
+	}
+
+		printf("\n\n");
+
+		fclose(derrota);
+}
+
 void Mensagem_de_ERRO(){/*Mensagem de erro*/
 	printf("Digite [1] para  dar start ao jogo ou [2] para sair do jogo\n");
 } 
+
+void digite_continua(){
+
+	setbuf(stdin,NULL);
+
+	printf("\n\n");
+	printf("Digite ENTER para continuar:\n");
+	getchar();
+}
 
 void Game_mode(int gamemode){/*Aqui depois de ter recebido o retorno da funcao display(), o jogo executa ou sai*/
 
@@ -230,6 +303,8 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	Character* player = mostra_personagem_escolhido(personas, escolha);/*Aqui o personagem escolhido, e seus atributos antes omitidos, sao exibidos*/
 
+	digite_continua();
+
 	cria_torneio(raiz,personas,contador);/*Criacao do torneio*/
 
 	printf("\n\n\n");
@@ -238,17 +313,24 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	procura_adversario(raiz,player,0);
 
+	digite_continua();
+
 	printf("\n\n\n");
 
 	printf("Round 2:\n\n");
 
 	procura_adversario(raiz,player,atributo_escolhido);
 
+
+	digite_continua();
+
 	printf("\n\n\n");
 
 	printf("Round 3:\n\n");
 
 	procura_adversario(raiz,player,atributo_escolhido);
+
+	digite_continua();
 
 	printf("\n\n\n");
 
@@ -266,13 +348,13 @@ void deseja_continuar_vencedor(){/*Aqui nos damos a opcao do jogador continuar m
 
 	int escolha;
 
-	printf("Voce e o bichao mesmo hein, conquistou o Trono de Ferro e toda a Westeros\n");
+	printf("Voce conquistou o Trono de Ferro e toda a Westeros\n");
 
 	printf("Parabens!!!!\n\n");
 	printf("Quer jogar novamente?");
 	printf("\n\n");
 	printf("[1] - Sim,quero jogar novamente\n");
-	printf("[2] - Foda-se essa porra quero e ir embora\n");
+	printf("[2] - Nao quero ir embora\n");
 
 	scanf("%d", &escolha);
 
@@ -352,7 +434,9 @@ void seu_personagem(Character* player, int atributo_escolhido){/*Mostra os atrib
 }
 
 
-int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele navega a arvore, buscando o adversario do player que ta jogando, retornando o atributo usado na luta, caso seja um player*/
+
+
+void procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele navega a arvore, buscando o adversario do player que ta jogando, retornando o atributo usado na luta, caso seja um player*/
 
 		Character* Vencedor; /*Ponteiro que vai receber quem ganhou dos personagens. Se ele for o player ele sai, se nao continua*/
 
@@ -366,8 +450,8 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele
 
 				 		seu_personagem(player,atributo);
 
-
-				 		printf("Seu adversario : %s da casa %s\n", raiz->right->character->name, raiz->right->character->house);
+						printf("\n");				 		
+				 		printf("Seu adversario :%s da casa %s\n", raiz->right->character->name, raiz->right->character->house);
 
 				 		printf("\n\nSelecione um atributo: ");
 
@@ -377,7 +461,7 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele
 
 				 		 	if(Vencedor != player){
 
-				 		 		printf("\t\t\tVoce perdeu T-T\t\t\t\n");
+				 		 		display_shame();
 
 				 		 		printa_combate(player, raiz->right->character, atributo);
 
@@ -386,7 +470,7 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele
 				 		 	}
 				 		 	else{
 
-				 		 		printf("\t\t\tVoce Ganhou :P\t\t\t\n");
+				 		 		display_vitorioso();
 
 				 		 		printa_combate(player,raiz->right->character, atributo);
 				 		 	}
@@ -408,7 +492,7 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele
 
 				 		 if(Vencedor != player){
 
-				 		 		printf("\t\t\tVoce perdeu T-T\t\t\t\n");
+				 		 		display_shame();
 
 				 		 		printa_combate(player, raiz->left->character, atributo);
 
@@ -417,7 +501,7 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele
 				 		 	}
 				 		 	else{
 
-				 		 		printf("\t\t\tVoce Ganhou :P\t\t\t\n");
+				 		 		display_vitorioso();
 
 				 		 		printa_combate(player,raiz->left->character, atributo);
 				 		 	}
@@ -435,22 +519,16 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele
 				procura_adversario(raiz->right,player,atributo);
 			}
 
-		if(atributo != 0){
-
-			return atributo;
-
-		}
-
 }
 
 void deseja_continuar(){/*Printa no screen as opcoes, e chama Game_mode(), pra continuar ou nao*/
 
 	int escolha;
 
-	printf("Voce se fudeu pela a Guerra ao Trono de Ferro e acabou morrendo deseja continuar?\n");
+	printf("Voce perdeu a Guerra pelo Trono de Ferro e acabou morrendo deseja continuar?\n");
 	printf("\n\n");
 	printf("[1] - Sim,quero tentar denovo\n");
-	printf("[2] - Foda-se essa porra quero e ir embora\n");
+	printf("[2] - Nao, quero ir embora\n");
 
 	scanf("%d", &escolha);
 
@@ -716,7 +794,7 @@ int escolhe_personagem(lista* lista){
 	*/
 	display_de_escolha();
 
-	sleep(2);
+	sleep(1);
 
 	printf("\n");
 
