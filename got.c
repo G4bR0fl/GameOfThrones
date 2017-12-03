@@ -6,9 +6,9 @@
 #include <string.h>
 #include <unistd.h>
 
-t_node* node_create(){
+t_node* node_create(){/*Cria nodess para a arvore*/
 
-	t_node* ptr = malloc(sizeof(t_node));/*aloca dinamicamente um no depois coloca NULL nos ponteiros de Character right e left */
+	t_node* ptr = malloc(sizeof(t_node));/*aloca dinamicamente um no depois coloca NULL nos ponteiros de Character, right e left */
 
 	ptr->character = NULL;
 
@@ -16,35 +16,35 @@ t_node* node_create(){
 
 	ptr->left = NULL;
 
-	return(ptr);
+	return(ptr); /*Retorna o no criado*/
 }
 
-t_node* tree_create(){
+t_node* tree_create(){/*Cria o node raiz*/
 	t_node* raiz = malloc(sizeof(t_node));/*aloca memoria para o no raiz*/
 	raiz = node_create();
-	return raiz;
+	return raiz;/*Retorna a raiz criada*/
 }
 
-t_node* tree_node(t_node* raiz){
+t_node* tree_node(t_node* raiz){/*Cria os 30 nodes restantes da arvore*/
 	if(raiz == NULL){
-		return node_create();
+		return node_create();/*Aqui se a raiz passada for nula, quer dizer que ele chegou numa folha(sem ser nas oitavas), entao ele cria mais no*/
 	}
 	else{
-		raiz->left = tree_node(raiz->left);
-		raiz->right = tree_node(raiz->right);
+		raiz->left = tree_node(raiz->left);/*Chamada recursiva a esquerda*/
+		raiz->right = tree_node(raiz->right);/*Chamada recursiva a direita*/
 	}
-	return raiz;
+	return raiz;/*Retorna a raiz da arvore*/
 }
 
 int height(t_node* h){/*Checa a altura da arvore*/
-	int hl, hr;
+	int hl, hr;/*Variaveis que representam altura a direita e altura a esquerda da arvore*/
 
 	if(h == NULL){
 		return 0;
 	}
-	hl = height(h->left)+1;
-	hr = height(h->right)+1;
-
+	hl = height(h->left)+1;/*Chamada recursiva a esquerda, quando chega no node folha, vai retornando a o valor da funcao se for nulo + 1 = 0+1 */
+	hr = height(h->right)+1;/*Chamada recursiva a direita*/
+	/*hl e hr sempre sao iguais quando a recursividade no node atual acaba*/
 	if(hr >= hl){
 		return hr;
 	}
@@ -53,14 +53,14 @@ int height(t_node* h){/*Checa a altura da arvore*/
 	}
 }
 
-Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health){
+Character* character_create(char* _name, char* _house, int _agility, int _strength, int _intelligence, int _health){/*Funcao que cria o character*/
 
-	Character* character = (Character *) malloc(sizeof(Character));
-	char* character_name = (char *) malloc(sizeof(char)*strlen(_name));
-	char* character_house = (char *) malloc(sizeof(char)*strlen(_house));
-
-	strcpy(character_name, _name);
-	strcpy(character_house, _house);
+	Character* character = (Character *) malloc(sizeof(Character));/*Struct alocada dinamicamente*/
+	char* character_name = (char *) malloc(sizeof(char)*strlen(_name));/*Nome alocado dinamicamente numa variavel auxiliar*/
+	char* character_house = (char *) malloc(sizeof(char)*strlen(_house));/*Casa alocada dinamicamente numa variavel auxiliar*/
+	
+	strcpy(character_name, _name);/*Copia a string presente na variavel _nome, pra character_name, pois possuem o mesmo tamanho*/
+	strcpy(character_house, _house);/*Copia a string presente em _house pra character_house*/
 
  	character->name = character_name;
 	character->house = character_house;
@@ -68,20 +68,26 @@ Character* character_create(char* _name, char* _house, int _agility, int _streng
 	character->strength = _strength;
 	character->intelligence = _intelligence;
 	character->health = _health;
-
-	//free(character_name);
-	//free(character_house);
-
-	return character;
+	/*Aqui acessamos cada elemento da struct por 'character->', 
+	*fazendo receber cada variavel da funcao, salvo as auxiliares
+	*que por character->house e character->name nao terem tamanhos
+	*definidos, foi necessario fazer uma manipulacao com as strings
+	*para que nao tivesse ponteiro apontando pro mesmo lugar sempre
+	*e consequentemente tendo erro na memoria
+	*/
+	return character;/*Retornamos a struct recem feita*/
 }
 	
-void inserir_character(Character* character, lista* l){
-	if(l->begin == NULL && l->end == NULL){
+void inserir_character(Character* character, lista* l){/*Aqui inserimos o character recem criado, na lista duplamente encadeada*/
+	if(l->begin == NULL && l->end == NULL){/*Caso a lista esteja vazia, faremos o elemento novo da lista que aponta pra struct receber o inicio e o final*/
 		element* personagem = aloca_element(character);
 		l->begin = personagem;
 		l->end = personagem;
 	}
 	else{
+	/*Caso contrario, sempre inserimos no final da lista, sempre visando manter a logica da
+	 *lista duplamente encadeada, com o l->end->proximo(mais recente), sendo NULL
+	 */
 		element* aux = aloca_element(character);
 		l->end->proximo = aux;
 		aux->anterior = l->end;
@@ -99,14 +105,14 @@ lista* aloca_lista(){
 	return ptr;
 }
 
-element* aloca_element(Character* character){
+element* aloca_element(Character* character){/*Aqui alocamos um elemento dinamicamente para inserir na lista duplamente encadeada*/
 	element* personagem_fila = (element *) malloc(sizeof(element));
 	personagem_fila->character = character;
 
-	return personagem_fila;
+	return personagem_fila;/*Retornamos o elemento alocado*/
 }
 
-int display(){
+int display(){/*Nessa funcao apenas lemos o arquivo texto 'menu.txt' que possui uma matriz de caracter. Isso eh mostrado no terminal, no inicio do jogo*/
 
 	system("clear");
 
@@ -143,7 +149,7 @@ int display(){
 	return gamemode;
 }
 
-void display_de_escolha(){
+void display_de_escolha(){/*Aqui nos printamos de um jeito mais bonito a escolha de personagem, do mesmo jeito que a funcao display faz*/
 
 	system("clear");
 
@@ -180,11 +186,11 @@ void display_de_escolha(){
 	fclose(escolha);
 }
 
-void Mensagem_de_ERRO(){
+void Mensagem_de_ERRO(){/*Mensagem de erro*/
 	printf("Digite [1] para  dar start ao jogo ou [2] para sair do jogo\n");
 } 
 
-void Game_mode(int gamemode){
+void Game_mode(int gamemode){/*Aqui depois de ter recebido o retorno da funcao display(), o jogo executa ou sai*/
 
 		if(gamemode == 1){//chama a função
 
@@ -198,7 +204,7 @@ void Game_mode(int gamemode){
 		}
 }
 
-void Pre_Menu(){
+void Pre_Menu(){/*Chama display(), e o gamemode com o resultado de display()*/
 
 	int valor_de_entrada;
 
@@ -208,23 +214,23 @@ void Pre_Menu(){
 
 }
 
-void Menu_Gameofthrones(){
+void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	int escolha;
 
-	int contador = 1;
+	int contador = 1;/*Contador para a funcao de criar o torneio*/
 
 	int atributo_escolhido;
 
 	t_node* raiz = tree_create();
 
-	lista* personas = lista_aleatoria();
+	lista* personas = lista_aleatoria();/*Cria uma variavel que recebe uma lista aleatoria*/
 
-	escolha = escolhe_personagem(personas);
+	escolha = escolhe_personagem(personas);/*Aqui pode escolher o personagem, depois de serem dadas as respectivas opcoes*/
 
-	Character* player = mostra_personagem_escolhido(personas, escolha);
+	Character* player = mostra_personagem_escolhido(personas, escolha);/*Aqui o personagem escolhido, e seus atributos antes omitidos, sao exibidos*/
 
-	cria_torneio(raiz,personas,contador);
+	cria_torneio(raiz,personas,contador);/*Criacao do torneio*/
 
 	printf("\n\n\n");
 
@@ -255,9 +261,9 @@ void Menu_Gameofthrones(){
 
 }
 
-void deseja_continuar_vencedor(){
+void deseja_continuar_vencedor(){/*Aqui nos damos a opcao do jogador continuar mesmo depois de ter vencido*/
 
-		int escolha;
+	int escolha;
 
 	printf("Voce e o bichao mesmo hein, conquistou o Trono de Ferro e toda a Westeros\n");
 
@@ -279,7 +285,7 @@ void deseja_continuar_vencedor(){
 
 }
 
-void seu_personagem(Character* player, int atributo_escolhido){
+void seu_personagem(Character* player, int atributo_escolhido){/*Mostra os atributos do personagem escolhido*/
 
 	printf("Seu personagem : %s da casa %s\n",player->name,player->house);
 
@@ -346,10 +352,9 @@ void seu_personagem(Character* player, int atributo_escolhido){
 }
 
 
-int procura_adversario(t_node* raiz, Character* player, int atributo){
+int procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele navega a arvore, buscando o adversario do player que ta jogando, retornando o atributo usado na luta, caso seja um player*/
 
-
-		Character* Vencedor;
+		Character* Vencedor; /*Ponteiro que vai receber quem ganhou dos personagens. Se ele for o player ele sai, se nao continua*/
 
 			if(raiz != NULL && raiz->character == NULL){
 
@@ -438,7 +443,7 @@ int procura_adversario(t_node* raiz, Character* player, int atributo){
 
 }
 
-void deseja_continuar(){
+void deseja_continuar(){/*Printa no screen as opcoes, e chama Game_mode(), pra continuar ou nao*/
 
 	int escolha;
 
@@ -488,11 +493,11 @@ void printa_combate(Character* fighter_one,Character* fighter_two, int combate){
 
 
 
-Character* fight(Character* fighter_one, Character* fighter_two, int atributo){
+Character* fight(Character* fighter_one, Character* fighter_two, int atributo){/*Aqui temos a funcao de chamar a luta, que recebe o jogador 1 e o jogador 2*/
 
-	Character* winner;
+	Character* winner;/*Ponteiro pra Character, que recebe o vencedor, podendo ser fighter_one ou fighter_two*/
 
-	switch(atributo){
+	switch(atributo){/*Compara os atributos dos lutadores, dependendo do atributo escolhido*/
 
 		case 1:
 
@@ -571,23 +576,23 @@ Character* fight(Character* fighter_one, Character* fighter_two, int atributo){
 
 }
 
-Character* fight_bot(Character* fighter_one, Character* fighter_two){
+Character* fight_bot(Character* fighter_one, Character* fighter_two){/*Aqui temos a luta dos bots, caso procura_adversario() nao ache o player*/
 
-	int random;
+	int random;/*Variavel que vai receber um numero aleatorio*/
 
 	Character* winner;
 
-	struct timespec seed;
+	struct timespec seed;/*Struct da time.h*/
 
 	clock_gettime(CLOCK_REALTIME, &seed);
 
-	srand(seed.tv_nsec);
+	srand(seed.tv_nsec); /*Vai na struct seed, e usa o tempo em nanossegundos*/
 
-	random = rand()%4+1;
+	random = rand()%4+1; /*Gera numeros de 1 ate 4*/
 
 	printa_combate(fighter_one,fighter_two,random);
 
-	switch(random){
+	switch(random){/*De acordo com o numero gerado no random, o atributo eh escolhido*/
 
 		case 1:
 
@@ -668,7 +673,7 @@ Character* fight_bot(Character* fighter_one, Character* fighter_two){
 
 
 
-void cria_torneio(t_node* raiz, lista* lista, int contador){
+void cria_torneio(t_node* raiz, lista* lista, int contador){/*Aqui a arvore eh criada*/
 
 	int altura = 0;
 
@@ -684,7 +689,7 @@ void cria_torneio(t_node* raiz, lista* lista, int contador){
 
 }
 
-Character* mostra_personagem_escolhido(lista* lista, int escolha){
+Character* mostra_personagem_escolhido(lista* lista, int escolha){/*Aqui o personagem escolhido pelo jogador eh mostrado*/
 
 	element* aux_ptr;
 	Character* player;
@@ -712,7 +717,9 @@ Character* mostra_personagem_escolhido(lista* lista, int escolha){
 }
 
 int escolhe_personagem(lista* lista){
-
+	/*Aqui o display de escolha eh mostrado, logo apos o numero eh lido e a funcao retorna o suposto 
+    *personagem escolhido. Sendo que aqui printa todas as opcoes que foram jogadas pra lista aleatoriamente
+	*/
 	display_de_escolha();
 
 	sleep(2);
@@ -813,7 +820,7 @@ int escolhe_personagem(lista* lista){
 
 }
 
-lista* lista_aleatoria(){
+lista* lista_aleatoria(){/*Aqui eh gerada uma lista, com os personagens numa ordem totalmente randomica, dentre os 20 do txt, somente 16 entram*/
 
 	FILE* personagens;/*ptr para arquivo */
 
@@ -897,7 +904,7 @@ lista* lista_aleatoria(){
 
 }
   
-void print_list(lista* l){
+void print_list(lista* l){/*Funcao pra printar a lista, usada em teste para ver se a lista correspondia a nossa logica, usado mais para debugar*/
 	element* aux = l->begin;
 	while(aux != NULL){
 		printf("%s -> ", aux->character->name);
@@ -906,7 +913,7 @@ void print_list(lista* l){
 	printf("\n");
 }
 
-void character_free(Character* character){
+void character_free(Character* character){/*Funcao de dar free na struct Character*/
 	free(character->name);
 	free(character->house);
 	free(character);
@@ -915,7 +922,7 @@ void character_free(Character* character){
 	character = NULL;
 }	
 
-void remove_list(lista* l){
+void remove_list(lista* l){/*Funcao que cuida do free da lista junto com o free da struct Character*/
 	element* ptr = l->begin;
 	if(l->begin == NULL && l->end == NULL){
 		printf("Lista vazia!\nSaindo\n");
@@ -929,9 +936,9 @@ void remove_list(lista* l){
 	}
 	l->end = ptr;
 	free(l);
-}/*Verificar leak*/
+}
 
-void tree_free(t_node* raiz){
+void tree_free(t_node* raiz){/*Essa funcao da free na arvore gerada*/
 	if(raiz == NULL){
 		printf("Arvore vazia!\n");
 	}
@@ -944,10 +951,10 @@ void tree_free(t_node* raiz){
 			free(raiz);
 			return;
 		}
-	}/*Verificar leak*/
+	}
 }
 
-void preenche_arvore(t_node* raiz, lista* l, int counter){
+void preenche_arvore(t_node* raiz, lista* l, int counter){/*Essa funcao preenche os nos folhas da arvore principal que foi gerada*/
 	int i;
 	if(raiz->left != NULL && raiz->right != NULL){
 		preenche_arvore(raiz->left, l, counter*2);
@@ -970,7 +977,7 @@ void preenche_arvore(t_node* raiz, lista* l, int counter){
 	}
 }
 
-void tree_print_preorder(t_node* raiz){
+void tree_print_preorder(t_node* raiz){/*Essa funcao printa os personagens em pre_ordem, como especificado no trabalho*/
     if(raiz != NULL){
         if(raiz->character != NULL){
         	printf("%s\n", raiz->character->name);
