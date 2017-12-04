@@ -321,7 +321,6 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	procura_adversario(raiz,player,atributo_escolhido);
 
-
 	digite_continua();
 
 	printf("\n\n\n");
@@ -339,7 +338,12 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 	procura_adversario(raiz,player,atributo_escolhido);
 
 	if(raiz->character == player){
+		tree_free(raiz);
+		remove_list(personas);
 		deseja_continuar_vencedor();	
+	}else{
+		tree_free(raiz);
+		remove_list(personas);
 	}
 
 }
@@ -434,9 +438,7 @@ void seu_personagem(Character* player, int atributo_escolhido){/*Mostra os atrib
 }
 
 
-
-
-void procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele navega a arvore, buscando o adversario do player que ta jogando, retornando o atributo usado na luta, caso seja um player*/
+void procura_adversario(t_node* raiz, Character* player, int atributo){/*Aqui ele navega a arvore, buscando o adversario do player que ta jogando*/
 
 		Character* Vencedor; /*Ponteiro que vai receber quem ganhou dos personagens. Se ele for o player ele sai, se nao continua*/
 
@@ -1003,6 +1005,7 @@ void remove_list(lista* l){/*Funcao que cuida do free da lista junto com o free 
 	while(ptr != NULL){
 		l->begin = l->begin->proximo;
 		character_free(ptr->character);
+		free(ptr->character);
 		free(ptr);
 		ptr = l->begin;
 	}
@@ -1020,9 +1023,10 @@ void tree_free(t_node* raiz){/*Essa funcao da free na arvore gerada*/
 			tree_free(raiz->right);
 		}
 		if(raiz->left == NULL && raiz->right == NULL){
+			t_node* ptr = raiz;
 			free(raiz);
 			return;
-		}
+		}	
 	}
 }
 
