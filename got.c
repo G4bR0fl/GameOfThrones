@@ -250,6 +250,135 @@ void display_shame(){
 		fclose(derrota);
 }
 
+void display_round1(){
+
+	char mat[8][39];
+
+	int i,j;
+
+	FILE *round1;
+
+	round1 = fopen("round1.txt", "r");
+
+	printf("\n\n");
+
+	while(!feof(round1)){
+
+		for(i=0;i < 8;i++){
+			for(j = 0; j < 39;j++){
+				fscanf(round1, "%c", &mat[i][j]);
+			}
+		}
+	}
+
+	for(i=0;i < 8;i++){
+		for(j=0;j<39;j++){
+			printf("%c", mat[i][j]);
+		}
+	}
+
+	printf("\n\n");
+
+	fclose(round1);
+
+}
+
+void display_round2(){
+
+	char mat[8][41];
+
+	int i,j;
+
+	FILE *round2;
+
+	round2 = fopen("round2.txt", "r");
+
+	printf("\n\n");
+
+	while(!feof(round2)){
+
+		for(i=0;i < 8;i++){
+			for(j = 0; j < 41;j++){
+				fscanf(round2, "%c", &mat[i][j]);
+			}
+		}
+	}
+
+	for(i=0;i < 8;i++){
+		for(j=0;j<41;j++){
+			printf("%c", mat[i][j]);
+		}
+	}
+
+	printf("\n\n");
+
+	fclose(round2);
+
+}
+
+void display_round3(){
+
+	char mat[8][41];
+
+	int i, j;
+
+	FILE *round3;
+
+	round3 = fopen("round3.txt", "r");
+
+	printf("\n\n");
+
+	while(!feof(round3)){
+
+		for(i = 0; i < 8;i++){
+			for(j = 0; j < 41;j++){
+				fscanf(round3,"%c",&mat[i][j]);
+			}
+		}
+	}
+
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 41;j++){
+			printf("%c", mat[i][j]);
+		}
+	}
+
+	printf("\n\n");
+
+	fclose(round3);
+}
+
+void display_round4(){
+
+	char mat[8][41];
+
+	int i, j;
+
+	FILE *round4;
+
+	round4 = fopen("round4.txt", "r");
+
+	printf("\n\n");
+
+	while(!feof(round4)){
+		for(i = 0; i < 8;i++){
+			for(j = 0; j < 41;j++){
+				fscanf(round4,"%c",&mat[i][j]);
+			}
+		}
+	}
+
+	for(i = 0; i < 8;i++){
+		for(j = 0; j < 41;j++){
+				printf("%c",mat[i][j]);
+		}
+	}
+
+	printf("\n\n");
+
+	fclose(round4);
+}
+
 void Mensagem_de_ERRO(){/*Mensagem de erro*/
 	printf("Digite [1] para  dar start ao jogo ou [2] para sair do jogo\n");
 } 
@@ -309,7 +438,7 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	printf("\n\n\n");
 
-	printf("Round 1:\n\n");
+	display_round1();
 
 	procura_adversario(raiz,player,0);
 
@@ -317,7 +446,7 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	printf("\n\n\n");
 
-	printf("Round 2:\n\n");
+	display_round2();
 
 	procura_adversario(raiz,player,atributo_escolhido);
 
@@ -325,7 +454,7 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	printf("\n\n\n");
 
-	printf("Round 3:\n\n");
+	display_round3();
 
 	procura_adversario(raiz,player,atributo_escolhido);
 
@@ -333,16 +462,18 @@ void Menu_Gameofthrones(){/*Roda o jogo*/
 
 	printf("\n\n\n");
 
-	printf("Round 4:\n\n");
+	display_round4();
 
 	procura_adversario(raiz,player,atributo_escolhido);
 
 	if(raiz->character == player){
 		tree_free(raiz);
+		free(raiz);	
 		remove_list(personas);
-		deseja_continuar_vencedor();	
+		deseja_continuar_vencedor();
 	}else{
 		tree_free(raiz);
+		free(raiz);
 		remove_list(personas);
 	}
 
@@ -991,9 +1122,7 @@ void character_free(Character* character){/*Funcao de dar free na struct Charact
 	free(character->name);
 	free(character->house);
 	free(character);
-	character->name = NULL;
-	character->house = NULL;
-	character = NULL;
+
 }	
 
 void remove_list(lista* l){/*Funcao que cuida do free da lista junto com o free da struct Character*/
@@ -1005,11 +1134,9 @@ void remove_list(lista* l){/*Funcao que cuida do free da lista junto com o free 
 	while(ptr != NULL){
 		l->begin = l->begin->proximo;
 		character_free(ptr->character);
-		free(ptr->character);
 		free(ptr);
 		ptr = l->begin;
 	}
-	l->end = ptr;
 	free(l);
 }
 
@@ -1023,7 +1150,7 @@ void tree_free(t_node* raiz){/*Essa funcao da free na arvore gerada*/
 			tree_free(raiz->right);
 		}
 		if(raiz->left == NULL && raiz->right == NULL){
-			t_node* ptr = raiz;
+
 			free(raiz);
 			return;
 		}	
