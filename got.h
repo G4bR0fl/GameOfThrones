@@ -124,7 +124,13 @@ void display_shame();
 
 void digite_continua();
 
+void display_round1();
 
+void display_round2();
+
+void display_round3();
+
+void display_round4();
 
 
 #endif
